@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+  <lable>id:
+    <input type="text" v-model="id">
+  </lable>
+  <lable>name:
+    <input type="text" v-model="name">
+  </lable>
+  <input type="button" @click="onclick" value="添加">
+  <p v-for="item in list3" :key="item.id">
+    <input type="checkbox" @click="add(item)">{{item.id}}----{{item.name}}
+  </p>
+</div>
+
+  <script>
+      var vm = new Vue({
+        el:'#app',
+        id:'',
+        name:'',
+        data:{
+          list3:[
+            {id:1,name:"里斯"},
+            {id:2,name:"韩非子"},
+            {id:3,name:"嬴政"},
+            {id:4,name:"荀子"},
+          ]
+        },
+        methods:{
+          onclick:function () {
+            this.list3.unshift({id:this.id,name:this.name})
+          },
+        }
+      })
+
+  </script>
+</body>
+</html>

@@ -9,13 +9,37 @@
   <div id="app">
     <p v-for="item in list">{{item}}</p>
     <p v-for="item,i in list">索引值{{i}}每一项{{item}}</p>
+    <p v-for="user in list2">{{user.id}}+++{{user.name}}</p>
+    <p v-for="(user,i) in list2">{{user.id}}+++{{user.name}}+++key{{i}}</p>
+    <p v-for="value in user">++++{{value}}</p>
+    <p v-for="(val,key,i) in user">val={{val}}+++key={{key}}++++value={{value}}</p>
+    <p v-for="count in 5">{{count}}</p><!-- 从0开始 迭代数字-->
+    <p v-for="name in list3">++{{name.name}}}</p>
+
   </div>
 </body>
 <script>
   var vm = new Vue({
     el:'#app',
     data:{
-      list:["hha",2,3,4,5,6]
+      list:["hha",2,3,4,5,6],
+      list2:[
+        {id:1,name:"zs1"},
+        {id:2,name:"zs2"},
+        {id:3,name:"zs3"},
+        {id:4,name:"zs4"},
+      ],
+      user:{
+        id:1,
+        name:"SedateC",
+        gender:"男"
+      },
+      list3:[
+        {id:1,name:"里斯"},
+        {id:2,name:"韩非子"},
+        {id:3,name:"嬴政"},
+        {id:4,name:"荀子"},
+      ]
     }
   })
 </script>
