@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p v-text="msg"></p><br>
+    <input type="button" value="开始" v-on:click="start()"/>
+    <input type="button" value="结束" v-on:click="end()"/>
+
+  </div>
+</body>
+<script>
+  var vm = new Vue({
+    //vm 实例自动观察 对象中值的变化 //只需要关心数据
+    el:'#app',
+    data:{
+      msg:'这是一个跑马灯效果',
+      interid:null
+    },
+    methods:{
+      start:function () {
+        if (this.interid != null){
+          return;
+        }else {
+          this.interid = setInterval(()=>{ //()=>外部指向语法 构造函数内部的this 永远和外部的一样
+            //console.log(this.msg);
+            //获取第一个字符
+            var textstart = this.msg.substring(0,1);
+            //第一个后面字符
+            var textend = this.msg.substring(1);
+            //拼接
+            var text = textend + textstart;
+            this.msg = text;
+          },400)
+        }
+      },
+      end:function () {
+        clearInterval(this.interid)
+        this.interid = null; //清除定时器后
+      }
+    }
+
+  })
+</script>
+</html>

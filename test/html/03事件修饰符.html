@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .inner{
+      height: 150px;
+      background-color: #0074D9;
+    }
+  </style>
+</head>
+<body>
+
+    <div id="app">
+      <div class="inner" @click.capture="divclick()"> <!--click.captur 捕获促发机制  先DIV 再inner-->
+        <input type="button" value="按钮" @click="btnhandler()">
+        <input type="button" value="按钮Stop" @click.stop="btnhandler()">
+        <input type="button" value="按钮prevent" @click.prevent="btnhandler()">
+        <input type="button" value="按钮prevent" @click.self="btnhandler()"><!--只执行自己的click方法-->
+      </div>
+      <a href="http://www.baidu.com" @click.stop="linkclick">aaaaa</a><br> <!--@click.stop 阻止冒泡-->
+      <a href="http://www.baidu.com" @click.prevent="linkclick">有问题去百度prevent</a> <!--@click.prevent 阻止默认事件 这里是打开百度-->
+      <a href="http://www.baidu.com" @click.self="linkclick">有问题去百度self</a> <!--@click.prevent 阻止默认事件当前元素本身不包括其他元素的冒泡 这里是打开百度-->
+      <a href="http://www.baidu.com" @click.prevent.once="linkclick">有问题去百度prevent.onc</a> <!--@click.prevent 阻止默认事件包括其他元素 这里是打开百度-->
+
+    </div>
+
+
+</body>
+<script>
+    var vm  = new Vue({
+      el:'#app',
+      data:{},
+      methods:{
+        //默认冒泡机制
+        btnhandler:function () {
+          console.log("触发inner点击事件")
+        },
+        divclick:function () {
+          console.log("触发div事件")
+        },
+        linkclick:function () {
+          console.log("link click 事件")
+        }
+      }
+    })
+</script>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h4>{{msg}}</h4>
+  <input type="text" :value="msg" style="width: 100%"> <!--v-bind 只能实现单向绑定 无法双向-->
+  <input type="text" v-model="msg" style="width: 100%"><!--v-modle 只能用在表单元素中-->
+</div>
+</body>
+<script>
+  var vm = new Vue({
+    el:'#app',
+    data:{
+      msg:"我们都是好学生爱吃萝卜和青菜"
+    }
+  })
+</script>
+</html>

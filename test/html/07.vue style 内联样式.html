@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <!--对象就是无序键值对的集合-->
+  <div id="app">
+    <h1 v-bind:style="[styleObj1,styleObj2]">lalalalalaalallalal</h1>
+  </div>
+  <script>
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        styleObj1:{color:'red','font-size':'80px','font-weight':'200'},
+        styleObj2:{fontStyle:'italic'}
+      }
+    })
+  </script>
+</body>
+
+</html>

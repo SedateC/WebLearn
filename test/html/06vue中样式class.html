@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+  .red{
+    color:red;
+  }
+  .thin{
+    font-weight:200;
+  }
+  .italic{
+    font-style:italic;
+  }
+  .active{
+    letter-spacing:0.5em;
+  }
+</style>
+<body>
+<div id="app">
+  <h1 class="red thin">这是一个很大的H1，咔咔咔咔咔</h1>
+  <h1 class="red italic thin active">这是一个很大的H1，咔咔咔咔咔</h1>
+  <h1 :class="['red','italic1','thin','active']">这是一个很大的H1，咔咔咔咔咔</h1>
+  <h1 :class="['red',flag?active:'']">这是一个很大的H1</h1><!--数组里三元表达式-->
+  <h1 :class="['red',{'active':flag}]">这是一个很大的H1</h1><!--style对象三元表达式-->
+  <h1 :class="{red:true,thin:true,active:false,italic:true}">这是一个很大的H1</h1><!--style对象三元表达式-->
+  <h1 :class="classobj">这是一个很大的H1</h1>
+
+</div>
+  <script>
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        flag:true,
+        classobj:{red:true,thin:true,active:false,italic:true}
+      },
+      methods:{
+
+      }
+    })
+  </script>
+</body>
+
+</html>
