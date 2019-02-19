@@ -15,7 +15,7 @@
     <p v-cloak>======={{message}}==========</p> <!--解决插值表达式闪烁问题-->
     <h4 v-text="message">========</h4><!--覆盖原本内容-->
     <p v-text="msg2"></p>
-    <p v-html="html">德萨大所多</p>
+    <p v-html="html">德萨大所多</p><!--显示-->
     <input type="button" value="按钮" v-bind:title="mytitle+'表达式外的内容'">
     <input type="button" value="按钮" :title="mytitle+'表达式外的内容'"><!--v-bind 简写 ： 要绑定的表达式-->
     <input type="button" value="method按钮" v-on:click="show()"><!-- V-ON 绑定机制 绑定事件-->

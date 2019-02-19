@@ -15,7 +15,7 @@
     <input type="text" v-model="name">
   </lable>
   <input type="button" @click="onclick" value="添加">
-  <p v-for="item in list3" :key="item.id">
+  <p v-for="item in list3" :key="item.id"><!-- 这里需要制定KEY -->
     <input type="checkbox" @click="add(item)">{{item.id}}----{{item.name}}
   </p>
 </div>

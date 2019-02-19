@@ -19,7 +19,7 @@
         <input type="button" value="按钮" @click="btnhandler()">
         <input type="button" value="按钮Stop" @click.stop="btnhandler()">
         <input type="button" value="按钮prevent" @click.prevent="btnhandler()">
-        <input type="button" value="按钮prevent" @click.self="btnhandler()"><!--只执行自己的click方法-->
+        <input type="button" value="按钮self" @click.self="btnhandler()"><!--只执行自己的click方法-->
       </div>
       <a href="http://www.baidu.com" @click.stop="linkclick">aaaaa</a><br> <!--@click.stop 阻止冒泡-->
       <a href="http://www.baidu.com" @click.prevent="linkclick">有问题去百度prevent</a> <!--@click.prevent 阻止默认事件 这里是打开百度-->
