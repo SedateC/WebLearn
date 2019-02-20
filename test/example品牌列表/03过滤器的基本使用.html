@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <p>{{msg|msgFormat('啦啦啦+1')|test}}</p> <!--前面只用输入msg-->
+</div>
+<script>
+  Vue.filter('msgFormat',function (msg,arg) {//这里需要传参数 msg默认需要传 过滤器需要优先定义
+    return msg.replace(/这是/g,arg);
+  })
+
+  Vue.filter('test',function (msg) {
+    return msg+"=========="
+  })
+
+  /*vue过滤器使用*/
+   var vm = new Vue({
+     el:app,
+     data:{
+       msg:"这是一个，这是两个，这是三个处理",
+     },
+     methods:{
+
+     }
+   })
+
+
+</script>
+</body>
+</html>

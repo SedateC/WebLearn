@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>自定义按键修饰符</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3>添加品牌</h3>
+    </div>
+    <div class="panel-body form-inline">
+      <label>
+        id:
+        <input type="text" class="form-control" v-model="id">
+      </label>
+
+      <label>
+        name:
+      <!--  <input type="text" class="form-control"v-model="name" @keyup.enter="onclick">
+        <input type="text" class="form-control"v-model="name" @keyup.113="onclick"> &lt;!&ndash;F2对应113&ndash;&gt;
+        <input type="text" class="form-control"v-model="name" @keyup.f2="onclick">  Vue.config.keyCodes.f2 = 113;-->
+        <input type="text" class="form-control"v-model="name" @keyup.enter="onclick">
+      </label>
+      <label>
+        <input type="button" value="添加" class="btn btn-primary" @click="onclick"/>
+      </label>
+      <label>
+        搜索名称关键字:
+        <input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'"><!--自定义共有指令-->
+        <input type="button" class="btn btn-primary" value="搜索" @click="search(keywords)">
+      </label>
+    </div>
+  </div>
+
+  <table class="table table-hover tab table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>ctime</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--之前数据是 data 中list渲染-->
+    <tr v-for="item in search(keywords)" :key="item.id"><!--记得加绑定-->
+      <td v-text="item.id"></td>
+      <td>{{item.name}}</td>
+      <td>{{item.ctime|dateFormat('')}}</td>
+      <td ><input type="button" value="删除"@click="ondel(item.id)"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div id="app2">
+  <h3 v-color="'red'" v-fontweight="'900'">{{dt|dateFormat}}</h3><!--自定义私有指令-->
+  <h3 v-color="'red'" v-fontshort="'50'">{{dt|dateFormat}}</h3><!--自定义私有指令-->
+</div>
+
+<script>
+
+// Vue.directive 定义全局指令 定义时候不用指定V-focus 但是调用的时候需要加v- 前缀
+//第一个参数永远是el 表示绑定指定的元素 原生的dom对象
+  Vue.directive('focus',{
+    bind:function (el) {//初始化操作，指令绑定到元素上时候立即执行该操作
+      el.focus(); //这里没有作用的原因是元素还没有插入到dom中所以没有效果
+    },
+    inserted:function (el) {// 表示元素插入到DOM中的时候调用该操作一次
+      el.focus()
+    },
+    update:function (el) {//当VNode更新的时候执行update，可能触发多次
+    //DOM节点更新时候调用
+    }
+  })
+  // v-color="'blue'"
+  Vue.directive('color',{
+    bind:function (el,binding) {//初始化操作，指令绑定到元素上时候立即执行该操作
+     el.style.color =binding.value; //这里渲染样式 最好在这里渲染 防止不生效
+      console.log(binding.value) //blue
+      console.log(binding.expression)//'blue'
+    },
+    inserted:function (el) {// 表示元素插入到DOM中的时候调用该操作一次
+     // el.style.color = 'red'; //这里也渲染样式
+    },
+    update:function (el) {//当VNode更新的时候执行update，可能触发多次
+      //DOM节点更新时候调用
+    }
+  })
+//自定义全局按键修饰符
+  Vue.config.keyCodes.f2 = 113;
+  Vue.filter('dateFormat',function (datastr,pattern) {
+    var dt = new Date(datastr);
+    var y = dt.getFullYear(); console.log(y);
+    var m = dt.getMonth()+1; console.log(m);
+    var d = dt.getDate()
+    if (pattern&&pattern.toLowerCase() === 'yyyy-mm-dd'){
+      return `${y}-${m}-${d}`
+    } else {
+      var hh = dt.getHours()
+      var mm = dt.getMinutes()
+      var ss = dt.getSeconds()
+      return `${y}-${m}-${d} ${hh}-${mm}-${ss}`  /* 这个模板字符串要用1左边那个*/
+    }
+  })
+//自定义私有指令
+  new Vue({
+    el:"#app2",
+    directives:{//自定义指令
+      'fontweight':{
+        bind:function (el,binding) {
+          console.log(binding.value)
+          el.style.fontWeight = binding.value;
+        }
+      },
+      'fontshort':function (el,binding) {//自定义指令简写 相当于写在了bind 和 update中
+        console.log(binding.value);
+        el.style.fontSize = parseInt(binding.value)+'px';//这里的属性要大写的呀
+      }
+    },
+    data:{
+      id:'',
+      name:'',
+      contentKey:'',
+      keywords:"",
+      dt:new Date(),
+      list:[
+        {id:1,name:'奔驰',ctime:new Date()},
+        {id:2,name:'宝马',ctime:new Date()},
+        {id:3,name:'路虎',ctime:new Date()}
+      ],
+    },
+  })
+  var vm = new Vue({
+    el:"#app",
+    data:{
+      id:'',
+      name:'',
+      contentKey:'',
+      keywords:"",
+      list:[
+        {id:1,name:'奔驰',ctime:new Date()},
+        {id:2,name:'宝马',ctime:new Date()},
+        {id:3,name:'路虎',ctime:new Date()}
+      ],
+
+    },
+    methods:{
+      onclick:function () {
+        var car = {id:this.id,name:this.name,ctime:new Date()};
+        this.list.push(car)
+        this.id = this.name = '';
+      },
+      ondel:function(id){
+        var index = this.list.findIndex(item =>{
+          if (item.id == id){
+            return true;
+          }
+        })
+        this.list.splice(index,1);
+      },
+      search(keywords){//学习some可以通过return true终止  filter得到新数组 findIndex得到索引方法\
+        var newlist =  this.list.filter(item =>{
+          if (item.name.includes(keywords)){//ES6中字符串提供新方法 String.prototype.includes 要包含的字符串
+            return item;
+          }
+        })
+        return newlist;
+      }
+    }
+  });
+
+
+</script>
+</body>
+</html>

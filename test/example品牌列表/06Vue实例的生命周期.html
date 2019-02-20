@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <input type="button" value="修改msg" @click="change">
+  <h3 id="h3">{{msg}}</h3>
+</div>
+</body>
+<script>
+  new Vue({
+    el:"#app",
+    data:{
+      msg:"msg in data",
+    },
+    methods:{
+      change(){
+        this.msg  = "change msg in data"
+      }
+    },
+    beforeCreate () {
+     // console.log(this.msg) undefined
+    },
+    created(){
+      console.log(this.msg)
+    },
+    beforeMount(){  //模板内存创建完成 未渲染到页面中 <h3 id="h3">{{msg}}</h3> 未显示
+      console.log(document.getElementById("h3").innerText) //{{msg}}
+    },
+    mounted(){ //渲染好模板
+      console.log(document.getElementById("h3").innerText) //msg in data
+    },
+    //运行阶段生命周期函数
+    beforeUpdate () { //when data changes 界面还没有被更新
+      console.log(document.getElementById("h3").innerText+" beforeUpdate") //msg in data beforeUpdate
+      //点击确定后调用 //msg 还是旧的未和最新的保持同步
+    },
+    updated(){//数据被更新了
+      console.log(document.getElementById("h3").innerText+" update") //change msg in data update
+    },
+    beforeDestroy () {//进入销毁阶段
+      //所以数据 methods data ..都处于可用阶段
+      console.log(document.getElementById("h3").innerText+" beforeDestroy") //change msg in data update
+    },
+    destroyed(){
+      //所有数据 销毁
+    }
+  })
+</script>
+</html>
