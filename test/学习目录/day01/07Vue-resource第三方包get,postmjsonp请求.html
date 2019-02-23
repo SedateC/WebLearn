@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.js Ajax(vue-resource)</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!--顺序有要求-->
+  <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <input type="button" value="get请求" @click="getInfo">
+  <input type="button" value="Post请求" @click="getInfo2">
+  <input type="button" value="jsonpInfo请求" @click="getInfo3">
+  <input type="button" value="请求" @click="getInfo4">
+  <input type="button" value="getInfo5" @click="getInfo5">
+
+</div>
+</body>
+<script>
+  Vue.http.options.root = 'http://localhost:8080/';
+  new Vue({
+    el:"#app",
+    data:{
+      msg:"msg in data",
+    },
+    methods: {
+      getInfo(){
+        //发送get请求
+        //this.$http.get('http://www.runoob.com/try/ajax/ajax_info.txt').then(function(res){
+        try {
+          this.$http.get('car',
+          ).then(function(res){
+            var res = res.body;
+            console.log(res.body)
+          },function(){
+            var res = res.body;
+            console.log(res.body)
+          });
+        }catch (e) {
+          var res = res.body;
+          console.log(res.body)
+        }
+
+      },
+      //手动发起post默认没有表单格式
+      getInfo2:function(){
+        //发送 post 请求
+        this.$http.post('http://www.runoob.com/try/ajax/demo_test_post.php',{name:"菜鸟教程",url:"http://www.runoob.com"},{emulateJSON:true}).then(function(res){
+          console.log(res.toString()+'success')
+        },function(res){
+          console.log(res.toString()+'faild')
+          console.log(res.data().name.toString()+'faild')
+        });
+      },
+      getInfo3:function () {
+       // this.$http.jsonp('http://www.runoob.com/try/ajax/ajax_info.txt').then(res=>{
+        try {
+          this.$http.jsonp('129.204.110.127:8080/car').then(function (res) {
+            if (res.status === 0){
+              console.log("成功了")
+            }else {
+              console.log("失败了")
+            }
+          })
+        }catch (e) {
+          console.log(e+"失败了")
+        }
+      },
+      getInfo4(){
+        //发送get请求
+        //this.$http.get('http://www.runoob.com/try/ajax/ajax_info.txt').then(function(res){
+        this.$http.get('129.204.110.127:8080/car',
+        ).then(function (res) {
+          if (res.status === 0){
+            console.log("成功了")
+          }else {
+            console.log("失败了")
+          }
+          console.log(res)
+        },function (res) {
+          console.log(res+"失败了")
+        })
+      },
+      getInfo5(){
+        this.$http.get('129.204.110.127:8080/car').then(function(res){
+          document.write(res.body);
+        },function(){
+          console.log('请求失败处理');
+        });
+      }
+    }
+  })
+</script>
+</html>

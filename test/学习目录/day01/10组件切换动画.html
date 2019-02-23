@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <Style>
+    .v-enter,.v-leave-to{
+      opacity: 0;
+      transform: translate(150px);
+    }
+    .v-enter-active,.v-leave-active{
+      transition: all 0.5s ease;
+    }
+  </Style>
+</head>
+<body>
+<div id="app">
+  <a href="" @click.prevent="ComponentName='login'">登录</a>
+  <a href="" @click.prevent="ComponentName='register'">注册</a>
+  <transition mode="out-in">
+    <component v-bind:is="ComponentName"></component>
+  </transition>
+</div>
+<script>
+  Vue.component('login',{
+    template:'<h3>登录组件</h3>'
+  });
+  Vue.component('register',{
+    template:'<h3>注册组件</h3>'
+  });
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      ComponentName:"login",
+    },
+    methods: {}
+  })
+
+
+</script>
+
+</body>
+</html>

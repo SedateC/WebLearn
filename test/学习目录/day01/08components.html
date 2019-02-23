@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <counter></counter>
+    <counter></counter>
+    <counter></counter>
+  </div>
+
+
+
+
+  <template id="tmpl">
+    <div><input type="button" value="+1" @click="Increment">
+      <h3>{{count}}</h3>
+    </div>
+  </template>
+
+
+<Script>
+  var dataObj = {count:0}
+  Vue.component('counter',{
+    template:'#tmpl',
+    data:function () {//定义funciotn
+      return {
+        count:0
+      };// 包含count
+    },
+    methods:{
+      Increment(){
+        this.count++;//这里的this 指代data中数据
+      }
+    }
+  })
+  var vm = new Vue({
+    el:'#app',
+    data:{},
+    methods: {
+
+    }
+  });
+</Script>
+</body>
+</html>

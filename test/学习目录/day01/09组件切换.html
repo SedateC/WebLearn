@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <a href="" @click.prevent="flag = true">登录</a>
+  <a href="" @click.prevent="flag = false">注册</a>
+  <login v-if="flag"></login>
+  <register v-else="flag"></register>
+  <lable>组件姓名</lable>
+  <component v-bind:is="'login'"></component>
+  <component v-bind:is="'register'"></component>
+  <lable>组件选择变换</lable>
+  <a href="" @click.prevent="ComponentName='login'">登录</a>
+  <a href="" @click.prevent="ComponentName='register'">注册</a>
+  <component v-bind:is="ComponentName"></component>
+</div>
+<script>
+  Vue.component('login',{
+    template:'<h3>登录组件</h3>'
+  });
+  Vue.component('register',{
+    template:'<h3>注册组件</h3>'
+  });
+  vm = new Vue({
+    el:'#app',
+    data:{
+      flag:true,
+      ComponentName:"login",//当前component 中:is组件的名称
+    },
+    methods:{
+
+    }
+  })
+</script>
+</body>
+</html>
